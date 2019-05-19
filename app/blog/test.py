@@ -1,6 +1,7 @@
-from django.test import TestCase
+import unittest
 
 
-class SampleTest(TestCase):
+class SampleTest(unittest.TestCase):
+
     def test_add(self):
         assert 1 + 1 == 3
