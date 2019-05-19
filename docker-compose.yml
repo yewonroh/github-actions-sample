@@ -1,0 +1,35 @@
+version: '3'
+
+volumes:
+  mysql_data: {}
+
+services:
+  mysql:
+    image: mysql:5
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mypassword
+      - MYSQL_DATABASE=djangosample
+      - MYSQL_USER=sampleuser
+      - MYSQL_PASSWORD=samplesecret
+      - MYSQL_ROOT_HOST=db
+    command: [
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci"
+    ]
+
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile-dev
+    volumes:
+      - ./app:/app
+    command: [
+      "/wait-for-it.sh", "db:5432", "-t", "10", "--",
+      "./manage.py", "runserver", "0:8000"
+    ]
+    links:
+      - mysql:db
+    ports:
+      - 8000:8000
