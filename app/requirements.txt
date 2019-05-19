@@ -1,2 +1,5 @@
 Django
 mysqlclient
+coverage
+pytest
+pytest-cov
