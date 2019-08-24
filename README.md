@@ -6,8 +6,8 @@
 $ git clone https://github.com/raccoonyy/django-sample.git
 $ cd django-sample
 $ docker build -t django-sample .
-$ docker run --name mysql -d -p 3306:3306 --rm -e MYSQL_ROOT_PASSWORD=my-secret -e MYSQL_DATABASE=djangosample -e MYSQL_USER=sampleuser -e MYSQL_PASSWORD=samplesecret -e MYSQL_ROOT_HOST=db mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
-$ docker run -d -p 8000:8000 --link mysql:db --rm django-sample
+$ docker run --rm -d --name postgres -p 5432:5432 -e POSTGRES_DB=djangosample -e POSTGRES_USER=sampleuser -e POSTGRES_PASSWORD=samplesecret postgres
+$ docker run --rm -d -p 8000:8000 --link postgres:db django-sample
 ```
 
 ### 요구조건

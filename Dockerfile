@@ -1,6 +1,6 @@
 FROM python:3
 
-RUN apt-get update && apt -y install mysql-client
+RUN apt-get update && apt -y install libpq-dev
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
