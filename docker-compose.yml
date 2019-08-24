@@ -1,23 +1,17 @@
 version: '3'
 
 volumes:
-  mysql_data: {}
+  postgres_data: {}
 
 services:
-  mysql:
-    image: mysql:5
+  postgres:
+    image: postgres
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgres/data
     environment:
-      - MYSQL_ROOT_PASSWORD=mypassword
-      - MYSQL_DATABASE=djangosample
-      - MYSQL_USER=sampleuser
-      - MYSQL_PASSWORD=samplesecret
-      - MYSQL_ROOT_HOST=db
-    command: [
-      "--character-set-server=utf8mb4",
-      "--collation-server=utf8mb4_unicode_ci"
-    ]
+      - POSTGRES_DB=djangosample
+      - POSTGRES_USER=sampleuser
+      - POSTGRES_PASSWORD=samplesecret
 
   django:
     build:
@@ -25,11 +19,9 @@ services:
       dockerfile: ./compose/django/Dockerfile-dev
     volumes:
       - ./app:/app
-    command: [
-      "/wait-for-it.sh", "db:5432", "-t", "10", "--",
-      "./manage.py", "runserver", "0:8000"
-    ]
+    command: ["./manage.py", "runserver", "0:8000"]
     links:
-      - mysql:db
+      - postgres:db
     ports:
       - 8000:8000
+    restart: always
