@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +128,5 @@ STATIC_ROOT = '/app/static/'
 
 if DEBUG:
     ALLOWED_HOSTS += ['*', ]
+
+API_HOST = os.environ.get('API_HOST', False)
