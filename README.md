@@ -3,9 +3,8 @@
 ### 요약
 
 ```
-$ git clone https://github.com/raccoonyy/django-sample.git
-$ cd django-sample
-$ docker build -t django-sample .
+$ git clone https://gitlab.com/raccoony/django-compose-sample
+$ cd django-compose-sample
 $ docker run --rm -d --name postgres -p 5432:5432 -e POSTGRES_DB=djangosample -e POSTGRES_USER=sampleuser -e POSTGRES_PASSWORD=samplesecret postgres
 $ docker run --rm -d -p 8000:8000 --link postgres:db django-sample
 ```
@@ -20,13 +19,13 @@ $ docker run --rm -d -p 8000:8000 --link postgres:db django-sample
 1. 저장소 클론
 
 ```
-$ git clone https://github.com/raccoonyy/django-sample-for-docker-compose.git
+$ git clone https://gitlab.com/raccoony/django-compose-sample
 ```
 
 2. 소스 디렉터리로 이동
 
 ```
-$ cd django-sample-for-docker-compose
+$ cd django-compose-sample
 ```
 
 3. 컴포즈로 서비스 실행
