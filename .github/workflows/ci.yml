@@ -1,0 +1,35 @@
+name: CI for Django
+
+on: [push, pull_request]
+
+jobs:
+  dev:
+    name: Build dev
+    runs-on: ubuntu-18.04
+    defaults:
+      run:
+        working-directory: app
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [3.8]
+    services:
+      db:
+        image: postgres
+        env:
+          POSTGRES_DB: djangosample
+          POSTGRES_USER: sampleuser
+          POSTGRES_PASSWORD: samplesecret
+        ports:
+          - 5432:5432
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+    - name: Run Tests
+      run: python manage.py test
