@@ -1,15 +1,6 @@
 name: CI for Django
 
-on:
-  workflow_dispatch:
-    inputs:
-      deploy:
-        description: 'deploy (yes/no)'
-        default: 'no'
-        required: true
-      service_name:
-        description: 'service name'
-        default: 'sample'
+on: [push, pull_request]
 
 jobs:
   ci:
