@@ -56,7 +56,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: github-actions-sample:${{ github.sha }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-sample:${{ github.sha }}
     -
       name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
