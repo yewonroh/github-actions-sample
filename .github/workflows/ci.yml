@@ -1,10 +1,19 @@
 name: CI for Django
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'deploy (yes/no)'
+        default: 'no'
+        required: true
+      service_name:
+        description: 'service name'
+        default: 'sample'
 
 jobs:
-  dev:
-    name: Build dev
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-18.04
     defaults:
       run:
@@ -35,3 +44,16 @@ jobs:
       run: flake8 api
     - name: Run Tests
       run: python manage.py test
+  cd:
+    name: Continuous Deployment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build docker image
+      env:
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build \
+            --build-arg BUILD_COMMIT=$IMAGE_TAG \
+            -t github-actions-sample:$IMAGE_TAG .
